@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Types {
+  shirts
+  pants
+  hoodies
+  hats
+}
+
+enum Gender {
+  men
+  women
+  kid
+  unisex
+  non_specified
+}
+
+enum Sizes {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  description String?
+  images String[]
+  inStock Int @default(0)
+  sizes Sizes[]
+
+  price Float @default(0)
+  slug String @unique
+  tags String[]
+  title String
+
+  ProductType ProductType @relation( fields: [type], references: [Type] )
+  type String
+
+  GenderTab Genders @relation( fields: [gender], references: [gender] )
+  gender String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductType {
+  idType Int @id @default(autoincrement())
+  Type String @unique
+  Productos Product[]
+}
+
+model Genders {
+  idGender Int @id @default(autoincrement())
+  gender String @unique
+  Productos Product[]
+}
+
+
+
+
+
+
+

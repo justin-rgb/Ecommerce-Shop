@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.8.0",
+    "@mui/material": "^5.8.1",
+    "@mui/x-data-grid": "^5.12.0",
+    "@prisma/client": "^3.14.0",
     "next": "12.1.6",
+    "prisma": "^3.14.0",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-hook-form": "^7.31.3",
+    "react-slideshow-image": "^3.7.5"
   },
   "devDependencies": {
     "@types/node": "17.0.36",

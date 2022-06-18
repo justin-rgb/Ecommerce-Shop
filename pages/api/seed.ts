@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { initialData } from '../../database/products';
+import { seedDatabase } from '../../database';
 
 type Data = {
     message: string
@@ -37,8 +37,22 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
     //     data: initialData.products
     // })
 
-    const data = await prisma.product.findMany()
-    console.log(data)
+    
 
+    // await prisma.role.createMany({
+    //     data:[
+    //         { idRole: 0, roleName: 'client' },
+    //         { idRole: 1, roleName: 'admin' }
+    //     ]
+    // })
+
+    await prisma.user.deleteMany()
+    await prisma.user.createMany({
+        data: seedDatabase.initialData.users
+    })
+
+    // const data = await prisma.product.findMany()
+    prisma.$disconnect()
+    
     res.status(200).json({ message: 'Proceso correctamente' })
 }

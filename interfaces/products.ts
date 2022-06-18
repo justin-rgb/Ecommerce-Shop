@@ -1,5 +1,5 @@
 export interface IProduct {
-    _id: string;
+    id: string;
     description: string;
     images: string[];
     inStock: number;
@@ -15,6 +15,20 @@ export interface IProduct {
     updatedAt: string;
 }
 
+export interface IProducts {
+    products: IUseProducts[];
+}
+
+export interface IUseProducts {
+    title:   string;
+    images:  string[];
+    price:   number;
+    inStock: number;
+    slug:    string;
+    id:      number;
+}
+
+
 export type IGender = 'men'|'women'|'kid'|'unisex'
-export type ISize = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
+export type ISize = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL' | '';
 export type IType = 'shirts'|'pants'|'hoodies'|'hats';

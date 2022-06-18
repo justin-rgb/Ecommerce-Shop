@@ -25,7 +25,8 @@ const searchProducts = async( req: NextApiRequest, res: NextApiResponse ) => {
 
 
     const prisma = new PrismaClient()
-
+    await prisma.$connect()
+    
     const products = await prisma.product.findMany({
         where: {
             OR: [

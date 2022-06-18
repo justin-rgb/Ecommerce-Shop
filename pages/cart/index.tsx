@@ -9,10 +9,12 @@ const CartPage = () => {
         <ShopLayout title='Carrito - 3' pageDescription={'Carrito de compras de la tienda'}>
             <Typography variant='h1' component='h1'>Carrito</Typography>
 
-            <Grid container>
+            <Grid container marginTop={2}>
+
                 <Grid item xs={ 12 } sm={ 7 }>
                     <CartList editable />
                 </Grid>
+
                 <Grid item xs={ 12 } sm={ 5 }>
                     <Card className='summary-card'>
                         <CardContent>
@@ -22,7 +24,10 @@ const CartPage = () => {
                             <OrderSummary />
 
                             <Box sx={{ mt: 3 }}>
-                                <Button color="secondary" className='circular-btn' fullWidth>
+                                <Button color="info" 
+                                    className='circular-btn' fullWidth
+                                    sx={{ backgroundColor: '#3A64D8' }}
+                                >
                                     Checkout
                                 </Button>
                             </Box>

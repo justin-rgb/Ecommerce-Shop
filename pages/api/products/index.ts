@@ -9,11 +9,20 @@ type Data = {
     | IProduct[]
 }
 
+const prisma = new PrismaClient();
+
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     
     switch( req.method ) {
         case 'GET':
+
             return getProducts( req, res )
+            .catch( (err) => {
+                throw err
+            })
+            .finally( async () => {
+                await prisma.$disconnect()
+            })
 
         default:
             return res.status(400).json({
@@ -26,15 +35,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 const getProducts = async(req: NextApiRequest, res: NextApiResponse) => {
     
     const { g = 'all' } = req.query;
-
     let condition;
-
+    
     if( g !== 'all' && SHOP_CONSTANTS.validGenders.includes(`${g}`) ){
         condition =  { g }
-        console.log(condition)
     }
 
-    const prisma = new PrismaClient();
+    
+    await prisma.$connect()
 
     const products = await prisma.product.findMany({
         select: { 
@@ -48,12 +56,7 @@ const getProducts = async(req: NextApiRequest, res: NextApiResponse) => {
         where: {  gender: condition?.g.toString() }
     })
 
-    console.log(products)
-
-    await prisma.$disconnect()
-
     return res.status(200).json({
-        condition,
         products
     });
 

@@ -17,13 +17,13 @@
 }
 
 .fadeIn {
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
     -webkit-animation-name: fadeIn;
-    -webkit-animation-delay: 1.2s;
-    animation-delay: 1.2s;
+    -webkit-animation-delay: 0.2s;
+    animation-delay: 0.2s;
     animation-name: fadeIn;
 }
 

@@ -3,7 +3,6 @@ import { FC } from "react";
 import { SideMenu } from "../ui";
 import { Navbar } from '../ui/Navbar';
 
-
 interface Props {
     title: string;
     pageDescription: string;

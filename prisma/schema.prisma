@@ -70,8 +70,23 @@ model Genders {
 }
 
 
+// Usuarios
 
+model User {
+  idUser Int @id @default(autoincrement())
+  name String
+  email String @unique
+  password String
 
+  Role Role @relation(fields: [role], references: [idRole])
+  role Int @default(0)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
-
+model Role {
+  idRole Int @id @default(autoincrement())
+  roleName String
+  UserRole User[]
+}

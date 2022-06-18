@@ -22,6 +22,8 @@ const getProductBySlug = async( req: NextApiRequest, res: NextApiResponse ) => {
     const productRoute = req.url?.split('/')[3]
 
     const prisma = new PrismaClient()
+    await prisma.$connect()
+    
     const product = await prisma.product.findUnique({
         where: { slug: productRoute }
     })

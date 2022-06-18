@@ -1,18 +1,22 @@
 import { createTheme } from '@mui/material/styles';
-import { red,  } from '@mui/material/colors';
-
 
 export const lightTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '##1E1E1E'
+      main: '#1E1E1E',
+      // main: '#fff'
     },
     secondary: {
       main: '#3A64D8'
     },
     info: {
-      main: '#fff'
+      main: '#fffff'
+      // main: '#1E1E1E'
+      // main: 'rgba(255,255,255,0.3)'
+    },
+    error: {
+      main: '#C40303'
     }
   },
   components: {
@@ -20,6 +24,11 @@ export const lightTheme = createTheme({
       defaultProps: {
         underline: 'none',
       },
+      styleOverrides: {
+        root: {
+          color: '#FFFFFF'
+        }
+      }
     },
     MuiAppBar: {
       defaultProps: {
@@ -28,7 +37,7 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: 'white',
+          backgroundColor: 'black',
           height: 60
         },
       }
@@ -37,14 +46,17 @@ export const lightTheme = createTheme({
     MuiTypography: {
       styleOverrides: {
         h1: {
+          color: 'white',
           fontSize: 30,
           fontWeight: 600
         },
         h2: {
+          color: 'white',
           fontSize: 20,
           fontWeight: 400
         },
         subtitle1: {
+          color: 'white',
           fontSize: 18,
           fontWeight: 600
         }
@@ -56,16 +68,18 @@ export const lightTheme = createTheme({
       defaultProps: {
         variant: 'contained',
         size: 'small',
-        disableElevation: true,
+        disableElevation: false,
         color: 'info'
       },
       styleOverrides: {
         root: {
+          backgroundColor: 'transparent',
+          color: 'white',
           textTransform: 'none',
           boxShadow: 'none',
           borderRadius: 10,
           ":hover": {
-            backgroundColor: 'rgba(0,0,0,0.05)',
+            backgroundColor: 'rgba(255,255,255,0.3)',
             transition: 'all 0.3s ease-in-out'
           }
         }

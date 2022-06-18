@@ -2,17 +2,29 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { lightTheme } from '../themes';
+import { SWRConfig } from 'swr';
+import { CartProvider, UIProvider } from '../context';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
 
-    <ThemeProvider theme={lightTheme} >
-      <CssBaseline>
-        <Component {...pageProps} />
-      </CssBaseline>
-    </ThemeProvider>
-
+    <SWRConfig 
+      value={{
+        fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
+      }}
+    >
+      <CartProvider>
+        <UIProvider>
+          <ThemeProvider theme={lightTheme} >
+            <CssBaseline>
+              <Component {...pageProps} />
+            </CssBaseline>
+          </ThemeProvider>
+        </UIProvider>
+      </CartProvider>
+      
+    </SWRConfig>
   )
 }
 

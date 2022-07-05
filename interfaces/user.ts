@@ -1,17 +1,17 @@
 
 
 export interface IUser {
-    id?: number;
-    name: string; 
+    idUser?: number;
+    name: string ; 
     email: string;
     password: string;
-    role: IUserRole[];
+    role: IUserRole ;
 
     createdAt: string;
     updatedAt: string;
 }
 
 export interface IUserRole {
-    idRole: number;
+    idRole?: number;
     roleName: string;
 }

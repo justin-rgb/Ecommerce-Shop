@@ -56,8 +56,20 @@ const getProducts = async(req: NextApiRequest, res: NextApiResponse) => {
         where: {  gender: condition?.g.toString() }
     })
 
-    return res.status(200).json({
-        products
+    await prisma.$disconnect()
+
+    const updatedProducts = products.map( product => {
+        
+        product.images = product.images.map( image => {
+            return image.includes('http') ? image : `${process.env.HOST_NAME}products/${image}`
+        })
+
+        return product;
+    })
+
+
+    return res.status(200).json({ 
+        products: updatedProducts 
     });
 
 }

@@ -5,6 +5,7 @@ import { ProductList } from '../components/products';
 // import { initialData } from '../database/products';
 import { useProducts } from '../hooks/useProducts';
 import { FullScreenLoading } from '../components/ui/FullScreenLoading';
+import { useSession } from 'next-auth/react';
 
 
 const Home: NextPage = () => {

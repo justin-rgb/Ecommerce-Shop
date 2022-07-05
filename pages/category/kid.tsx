@@ -12,7 +12,7 @@ const KidPage: NextPage = () => {
     const { data, isLoading, isError } = useProducts('/products?g=kid')
 
     return (
-        <ShopLayout title={'TesloShop - Kids'} pageDescription={'Mejores productos para niños'}  >
+        <ShopLayout title={'JVCShop - Kids'} pageDescription={'Mejores productos para niños'}  >
 
             <Typography variant='h1' component='h1'> Niños </Typography>
             <Typography variant='h2' sx={{ mb: 1 }}> Todos los productos </Typography>

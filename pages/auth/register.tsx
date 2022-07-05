@@ -1,12 +1,15 @@
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { getSession, signIn } from 'next-auth/react';
+import { GetServerSideProps } from 'next';
+
 import { Box, Button, Chip, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../../components/layout';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { jvcApi } from '../../api';
+import { useState, useContext } from 'react';
 import { ErrorOutline } from '@mui/icons-material';
 import { validations } from '../../utils';
+import { AuthContext } from '../../context';
 
 type FormData = {
     name    : string;
@@ -18,7 +21,7 @@ type FormData = {
 const RegisterPage = () => {
     
     const router = useRouter();
-    
+    const { registerUser } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
@@ -27,18 +30,20 @@ const RegisterPage = () => {
         
         setShowError(false)
 
-        try{
-
-            const { data } = await jvcApi.post('/user/register', { name, email, password } )
-            const { token, user } = data;
-            console.log( token, user );
-
-        }catch( error ){
-            
-            console.log('Ha ocurrido un error');
+        const { hasError, message } = await registerUser(name, email, password)
+        
+        if( hasError ){
             setShowError(true)
+            setErrorMessage( message! )
             setTimeout( () => setShowError(false), 3000 )
+            return;
         }
+
+        await signIn('credentials', { email, password } )
+
+        // const destination = router.query.p?.toString() || '';
+        // router.replace(destination)
+
     }
 
 
@@ -129,7 +134,7 @@ const RegisterPage = () => {
                         </Grid>
 
                         <Grid item xs={12} display='flex' justifyContent='end'>
-                            <NextLink href="/auth/login" passHref>
+                            <NextLink href={ router.query.p ? `/auth/login?p=${ router.query.p?.toString()}` : '/auth/login' } passHref>
                                 <Link underline='always'>
                                     ¿Ya tienes cuenta?
                                 </Link>
@@ -140,6 +145,26 @@ const RegisterPage = () => {
             </form>
         </AuthLayout>
     )
+}
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const session = await getSession({ req })
+    const { p = '/' } = query;
+
+    if( session ){
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false
+            }
+        }
+    }
+    
+    return {
+        props: {}
+    }
 }
 
 export default RegisterPage

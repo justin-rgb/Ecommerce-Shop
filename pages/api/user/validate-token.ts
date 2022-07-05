@@ -11,7 +11,7 @@ type Data =
     user: {
         email: string;
         name: string;
-        role: number;
+        role: any;
     }
 }
 
@@ -52,22 +52,30 @@ const checkJWT = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     const user = await Prisma.user.findUnique({
         where: {
             idUser: userId
+        },
+        include: {
+            Role: {
+                select: {
+                    roleName: true
+                }
+            }
         }
     })
+
     await Prisma.$disconnect()
 
     if ( !user ) {
         return res.status(400).json({ message: 'No existe usuario con ese id' })
     }
 
-    const { idUser, email, role, name } = user;
+    const { idUser, email, Role, name } = user;
 
     return res.status(200).json({
         message: 'Token renovado',
         token: jwt.signToken( idUser, email ),
         user: {
             email, 
-            role, 
+            role: Role, 
             name
         }
     })

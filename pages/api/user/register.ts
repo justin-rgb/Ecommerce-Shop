@@ -11,7 +11,7 @@ type Data =
     user: {
         email: string;
         name: string;
-        role: number;
+        role: any;
     }
 }
 
@@ -77,20 +77,27 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
             password: bcrypt.hashSync( password ),
             role: 0,
             name
+        },
+        include: {
+            Role: {
+                select: {
+                    roleName: true
+                }
+            }
         }
     })
 
     // DESCONEXION A BD
     await Prisma.$disconnect()
 
-    const { role, idUser } = newUser;
+    const { Role, idUser } = newUser;
     const token = jwt.signToken( idUser , email );
 
     return res.status(200).json({
         token, //jwt
         user: {
             email, 
-            role, 
+            role: Role, 
             name,
         }
     })

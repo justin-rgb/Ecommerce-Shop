@@ -4,13 +4,15 @@ import { FC, useContext, useEffect, useState } from 'react';
 import { CartContext } from '../../context';
 import { ItemCounter } from '../ui';
 import { ICartProduct } from '../../interfaces/cart';
+import { IOrderItem } from '../../interfaces';
 
 
 interface Props {
     editable?: boolean;
+    products?: IOrderItem[];
 }
 
-export const CartList: FC<Props> = ({ editable = false }) => {
+export const CartList: FC<Props> = ({ editable = false, products }) => {
 
     const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext);
 
@@ -24,12 +26,15 @@ export const CartList: FC<Props> = ({ editable = false }) => {
         setDisplayReady(true)
     },[])
 
+    const productsToShow = products ? products : cart
+    console.log(productsToShow)
+
     return (
         <>
             {   
                 displayReady === true ?
                     (                
-                    cart.map( product => (
+                    productsToShow.map( product => (
                         <Grid container spacing={2} key={ product.slug + product.size } sx={{ mb:1 }}>
                             <Grid item xs={3}>
                                 {/* TODO: llevar a la página del producto */}
@@ -37,7 +42,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                     <Link>
                                         <CardActionArea>
                                             <CardMedia 
-                                                image={ `/products/${ product.image }` }
+                                                image={ product.image }
                                                 component='img'
                                                 sx={{ borderRadius: '5px' }}
                                             />
@@ -56,7 +61,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                             <ItemCounter 
                                                 currentValue={ product.quantity }
                                                 maxValue={ 10 } 
-                                                updatedQuantity={ ( value ) => onNewCartQuantity(product, value) }
+                                                updatedQuantity={ ( value ) => onNewCartQuantity(product as ICartProduct, value) }
                                             />
                                         )
                                         : (
@@ -74,7 +79,7 @@ export const CartList: FC<Props> = ({ editable = false }) => {
                                         <Button 
                                             variant='text' 
                                             color='secondary' 
-                                            onClick={ () => removeCartProduct( product ) }
+                                            onClick={ () => removeCartProduct( product as ICartProduct ) }
                                             sx={{
                                                 backgroundColor: '#BB2121'
                                             }}

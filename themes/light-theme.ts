@@ -16,7 +16,7 @@ export const lightTheme = createTheme({
       // main: 'rgba(255,255,255,0.3)'
     },
     error: {
-      main: '#C40303'
+      main: '#F74141'
     }
   },
   components: {
@@ -92,8 +92,8 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          boxShadow: '0px 5px 5px rgba(0,0,0,0.05)',
-          borderRadius: '10px',
+          boxShadow: '0px 5px 5px rgba(5,5,5,0.6)',
+          borderRadius: '12px',
         }
       }
     }

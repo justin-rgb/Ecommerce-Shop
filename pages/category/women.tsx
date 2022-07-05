@@ -12,7 +12,7 @@ const WomenPage: NextPage = () => {
     const { data, isLoading, isError } = useProducts('/products?g=women')
 
     return (
-        <ShopLayout title={'TesloShop - Women'} pageDescription={'Mejores productos para mujeres'}  >
+        <ShopLayout title={'JVCShop - Women'} pageDescription={'Mejores productos para mujeres'}  >
 
             <Typography variant='h1' component='h1'> Mujeres </Typography>
             <Typography variant='h2' sx={{ mb: 1 }}> Todos los productos </Typography>

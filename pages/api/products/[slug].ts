@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = { message: string }
 
-export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
+export default function handlerSlug(req: NextApiRequest, res: NextApiResponse<Data>) {
 
     switch( req.method ) {
         case 'GET':
@@ -34,6 +34,10 @@ const getProductBySlug = async( req: NextApiRequest, res: NextApiResponse ) => {
         })
     }
     prisma.$disconnect()
+
+    product.images = product.images.map( image => {
+        return image.includes('http') ? image : `${process.env.HOST_NAME}products/${image}`
+    })
 
     return res.status(200).json( product );
 }

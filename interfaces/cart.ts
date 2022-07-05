@@ -2,7 +2,7 @@ import { ISize } from "./products";
 
 
 export interface ICartProduct {
-    id: string;
+    id: number;
     image: string;
     price: number;
     size?: ISize;

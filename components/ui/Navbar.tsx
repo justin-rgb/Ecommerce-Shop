@@ -36,17 +36,32 @@ export const Navbar = () => {
                     className="fadeIn">
                     <NextLink href='/category/men' passHref>
                         <Link  >
-                            <Button color={ asPath === '/category/men' ? 'primary' : 'info' } >Hombres</Button>
+                            <Button 
+                                color={ asPath === '/category/men' ? 'info' : 'info' }
+                                sx={{
+                                    backgroundColor: asPath === '/category/men' ? 'rgba(255,255,255,0.3)' : 'transparent'
+                                }}  
+                            >Hombres</Button>
                         </Link>
                     </NextLink>
                     <NextLink href='/category/women' passHref>
                         <Link>
-                            <Button color={ asPath === '/category/women' ? 'primary' : 'info' }>Mujeres</Button>
+                            <Button 
+                                color={ asPath === '/category/women' ? 'info' : 'info' }
+                                sx={{
+                                    backgroundColor: asPath === '/category/women' ? 'rgba(255,255,255,0.3)' : 'transparent'
+                                }}    
+                            >Mujeres</Button>
                         </Link>
                     </NextLink>
                     <NextLink href='/category/kid' passHref>
                         <Link>
-                            <Button color={ asPath === '/category/kid' ? 'primary' : 'info' }>Niños</Button>
+                            <Button 
+                                color={ asPath === '/category/kid' ? 'info' : 'info' }
+                                sx={{
+                                    backgroundColor: asPath === '/category/kid' ? 'rgba(255,255,255,0.3)' : 'transparent'
+                                }}
+                            >Niños</Button>
                         </Link>
                     </NextLink>
                 </Box>

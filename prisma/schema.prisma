@@ -17,6 +17,8 @@ enum Types {
   hats
 }
 
+
+
 enum Gender {
   men
   women
@@ -55,6 +57,11 @@ model Product {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+
+  //  Relaciones
+
+
 }
 
 model ProductType {
@@ -66,7 +73,9 @@ model ProductType {
 model Genders {
   idGender Int @id @default(autoincrement())
   gender String @unique
+
   Productos Product[]
+  // OrderItem OrderItems[]
 }
 
 
@@ -81,8 +90,12 @@ model User {
   Role Role @relation(fields: [role], references: [idRole])
   role Int @default(0)
 
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  //Relaciones
+  Order Order[]
 }
 
 model Role {
@@ -90,3 +103,75 @@ model Role {
   roleName String
   UserRole User[]
 }
+
+
+
+model Order {
+
+  id String @id @default(uuid())
+  
+  //  Relaciones a Tablas User OrderItems y ShippingAddress
+  User User @relation( fields: [user], references: [idUser] )
+  user Int 
+
+  // ShippingAddress OrderShippingAddress @relation(fields: [shippingAddress], references: [idShippingAddress])
+  shippingAddress Json
+  
+  // OrderItems OrderItems @relation(fields: [orderItems], references: [idItem])
+  orderItems Json[] 
+
+  // Campos
+  numberOfItems Int
+  subTotal Float 
+  tax Float
+  total Float
+  isPaid Boolean
+  paidAt String?
+  transactionId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// model OrderShippingAddress {
+
+//   idShippingAddress Int @id @default(autoincrement())
+
+//   firstName String
+//   lastName String
+//   address String
+//   address2 String?
+//   zip String
+//   city String
+//   country String
+//   phone String
+
+//   //  Relaciones
+//   // Order Order[]
+// }
+
+
+
+
+// No Usar
+// model OrderItems {
+
+//   idItem Int @id @default(autoincrement())
+
+//   title String
+//   size String
+//   quantity String
+//   slug String
+//   image String
+//   price Float
+  
+//   //  Relaciones
+//   Gender Genders @relation( fields: [gender], references: [gender] )
+//   gender String
+
+//   Order Order[]
+// }
+
+
+
+

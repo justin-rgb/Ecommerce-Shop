@@ -1,6 +1,6 @@
 export interface IProduct {
-    id: string;
-    description: string;
+    id: number;
+    description: string | '';
     images: string[];
     inStock: number;
     price: number;
@@ -11,8 +11,8 @@ export interface IProduct {
     type: IType;
     gender: IGender
 
-    createdAt: string;
-    updatedAt: string;
+    createdAt: string | Date;
+    updatedAt: string | Date;
 }
 
 export interface IProducts {

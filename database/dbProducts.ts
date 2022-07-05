@@ -22,6 +22,14 @@ const getProduct = async ( slug: string ) => {
         }
     })
     if( !product ) return null;
+
+    // TODO:
+    // Procesamiento de imagenes
+    product.images = product.images.map( image => {
+        return image.includes('http') ? image : `${process.env.HOST_NAME}products/${image}`
+    })
+    
+
     return JSON.parse( JSON.stringify(product) )
 }
 
@@ -68,7 +76,17 @@ export const getProductsByTerm = async ( term: string) => {
     })
 
     await prisma.$disconnect();
-    return products;
+
+    const updatedProducts = products.map( product => {
+        
+        product.images = product.images.map( image => {
+            return image.includes('http') ? image : `${process.env.HOST_NAME}products/${image}`
+        })
+
+        return product;
+    })
+
+    return updatedProducts;
 
 }
 
@@ -86,6 +104,29 @@ export const getAllProducts = async () => {
         }
     })
     await prisma.$disconnect()
-    return products;
+
+
+    const updatedProducts = products.map( product => {
+        
+        product.images = product.images.map( image => {
+            return image.includes('http') ? image : `${process.env.HOST_NAME}products/${image}`
+        })
+
+        return product;
+    })
+
+    return JSON.parse( JSON.stringify(updatedProducts) );
 
 }
+
+// export const createProduct = async () => {
+
+//     await prisma.$connect()
+//     const products = await prisma.product.create({
+//         data: {
+
+//         }
+//     })
+//     await prisma.$disconnect()
+//     return products;
+// }

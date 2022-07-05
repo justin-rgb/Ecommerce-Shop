@@ -11,13 +11,13 @@ type Data =
         idUser: number;
         name: string;
         email: string;
-        role: number;
+        role: any;
     }
 }
 
 const Prisma = new PrismaClient()
 
-export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
     
     switch(req.method){
         case 'POST':
@@ -41,6 +41,13 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const user = await Prisma.user.findUnique({ 
         where: {
             email
+        },
+        include: {
+            Role: {
+                select: {
+                    roleName: true
+                }
+            }
         }
      })    
     Prisma.$disconnect()
@@ -53,13 +60,16 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         return res.status(400).json({ message: 'Correo o contraseña no validos - Password' })
     }
     
-    const { role, name, idUser } = user;
+    const { name, idUser, Role } = user;
     const token = jwt.signToken( idUser, email )
 
     return res.status(200).json({
         token,
         user: {
-            idUser, email, name, role
+            idUser, 
+            email, 
+            name,
+            role: Role
         }
     })
 
